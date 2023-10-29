@@ -1,0 +1,38 @@
+version: '3'
+services:
+  front-app:
+    build:
+      context: ./front
+    ports:
+      - "8000:8000"
+
+  back-app:
+    build:
+      context: ./back
+    ports:
+      - "8081:8081"
+
+  mysql-db:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 2003157
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 2003157
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 2003157
+    ports:
+      - "8080:80"
+volumes:
+  mysql_data:
